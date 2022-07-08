@@ -4,6 +4,9 @@
     overflow: hidden;
    
 }
+.preload {
+    display: none;
+}
 
 .webgl {
     position: fixed;
