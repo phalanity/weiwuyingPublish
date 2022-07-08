@@ -34,19 +34,22 @@ window.addEventListener('click', (event) => {
     
     //Cast a ray
     if (!orbit) {
-        raycaster.setFromCamera(mouse, Threejs.camera)
-        const labels = [label1, label2, label3, label4, label5, label6, floor]
-        const intersects = raycaster.intersectObjects(labels)
-        
-        if (intersects.length) {
-            if (intersects[0].object !== floor) {
-                clickonWhichLabel(intersects[0])
+        if (Threejs.obj) {
+            raycaster.setFromCamera(mouse, Threejs.camera)
+            const labels = [label1, label2, label3, label4, label5, label6, floor]
+            const intersects = raycaster.intersectObjects(labels)
+
+            if (intersects.length) {
+                if (intersects[0].object !== floor) {
+                    clickonWhichLabel(intersects[0])
+                }
+
+            } else {
+                mouse.x = null
+                mouse.y = null
             }
-           
-        } else {
-            mouse.x = null
-            mouse.y = null
         }
+        
     }
 })
 
@@ -153,7 +156,6 @@ Threejs.scene.add(light);
 const updateAllMaterials = () => {
     Threejs.scene.traverse((child) => {
         if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
-            console.log(child)
             // child.material.envMap = environmentMap
             child.material.envMapIntensity = 5
             child.material.needsUpdate = true
