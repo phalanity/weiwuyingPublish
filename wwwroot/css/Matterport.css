@@ -174,7 +174,6 @@
     margin-right: 280px;
     z-index: 40;
     cursor: pointer;
-   
     height: 33px;
     object-fit: contain;
 }
@@ -187,7 +186,8 @@
     width: 50%;
     height: auto;
     z-index: 30;
-    display: block;
+    /*display: block;*/
+    display: none;
     color: white;
     background-color: #231815;
     opacity: 60%;
@@ -289,7 +289,7 @@
 }
 
 /*right menu*/
-.matterport_right_menu {
+    .matterport_right_menu {
     width: 10%;
     height: 50%;
     position: fixed;
@@ -445,7 +445,7 @@
     width: 100%;
     display: flex;
     justify-content: start;
-    align-items: end;
+    align-items: flex-end;
     color: #c8c9ca;
     font-size: 14px;
 }

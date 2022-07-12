@@ -90,17 +90,23 @@ MatterportPage.Left_Menu_Player = false
 MatterportPage.Left_Mneu_Line_Onclick = true
 
 /*-------------------------------------------------------
-  [leftmenu Player]*/
+  [leftmenu Player onclick]*/
 MatterportPage.Tour_player.on('click', () => MatterportPage.Left_Menu_Player_Onclick())
 MatterportPage.Tour_cancel.on('click', () => MatterportPage.Left_Menu_Cancel_Onclick())
 /*-------------------------------------------------------
   [leftmenu Player variable]*/
 MatterportPage.Left_Menu_Cancel_Onclick = () => {
     MatterportPage.Tour.css('display', 'none')
-    MatterportPage.Left_Menu_Player_Onclick()
+    MatterportPage.Tour_player.attr('src', '../../../models/left_box/play_button.svg')
+    MatterportPage.Left_Menu_Player = false
+    MatterportPage.Left_Menu_Onclick(0)
+    if (window.innerWidth <= 425) {
+        MatterportPage.TourBtn_Onclick()
+    }
 }
 
 MatterportPage.Left_Menu_Player_Onclick = () => {
+    MatterportPage.Tour.css('display', 'block')
     MatterportPage.Player_css()
     MatterportPage.Player_Roomtour()
     if (window.innerWidth <= 425) {
@@ -116,7 +122,7 @@ async function timerWait() {
             for (let j = MatterportPage.Left_Menu_Selected_j; j < tour_room[`${MatterportPage.Left_Menu_Line_Selected}`][i]; j++) {
                 MatterportPage.Tour.attr('src', `../../../models/Room/${MatterportPage.Left_Menu_Line_Selected}/${i}_${j}.jpg`)
                 MatterportPage.Left_Menu_Selected_j = j
-                await timer(2000)
+                await timer(1500)
                 if (!MatterportPage.Left_Menu_Player || !MatterportPage.Left_Mneu_Line_Onclick) break loop
             }
             MatterportPage.Left_Menu_Selected_j = 0
@@ -165,11 +171,10 @@ MatterportPage.Left_Menu_Head_css = () => {
     console.log('asd')
     const headtext = {
         chinese: '參觀導覽路線指引',
-        english: 'Featured routes',
-        japanese: ''
+        english: 'Guided route directions',
+        japanese: '参観ルート案内'
     }
     const language = MatterportPage.Language.replace('.', '')
-    console.log(MatterportPage.Leftmenu_Head_p)
     MatterportPage.Leftmenu_Head_p.text(headtext[language])
 }
 /*---------------------------------------------------------
@@ -290,8 +295,8 @@ MatterportPage.Overview_container_context = (language) => {
     }
     MatterportPage.Overview_text.html(overviewText[languageFix][menuFix] )
     
-    MatterportPage.Overview_click = true
-    MatterportPage.Overview_container.css('display', 'block')
+    //MatterportPage.Overview_click = true
+    //MatterportPage.Overview_container.css('display', 'none')
 }
 
 /*---------------------------------------------------------
@@ -507,6 +512,7 @@ MatterportPage.Init = () => {
     MatterportPage.Overview_container_context(MatterportPage.Language)
     MatterportPage.OnUIEvents()
     MatterportPage.OnRWDchange()
+    MatterportPage.Overview_container.css('display','none')
 }
 /*---------------------------------------------------------
  [ Static ]*/
@@ -526,7 +532,6 @@ MatterportPage.ChangePlaceByParameters = () => {
   
     MatterportPage.Menu_Onclick(query.place, true)
     MatterportPage.Language_Onclick(query.language, true)
-    
 }
 
 MatterportPage.OnUIEvents = () => {

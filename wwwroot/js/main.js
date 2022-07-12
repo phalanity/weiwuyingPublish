@@ -1,4 +1,6 @@
-﻿/*---------------------------------------------------------
+﻿
+
+/*---------------------------------------------------------
  [ Threejs Variables ]*/
 import { GLTFLoader } from './threeJS/GLTFLoader.js';
 import { OrbitControls } from './threeJS/OrbitControls.js';
@@ -321,7 +323,7 @@ Threejs.listenThreejsObjRWD = () => {
 const gltfLoadingMain = () => {
     Threejs.renderer.setSize(window.innerWidth, window.innerHeight);
     Threejs.camera.position.set(0, 4, 15);
-    Threejs.gltfLoader(Threejs.objectUrl);//gltf loader
+    //Threejs.gltfLoader(Threejs.objectUrl);//gltf loader
 
     //animate();//動畫
     Threejs.listenThreejsObjRWD();
@@ -372,7 +374,7 @@ UI.LanguageOpen = false
 UI.Download = $('.download')
 
 //Web info 
-UI.Web_info = $('.web_info')
+UI.Web_info_text = $('.web_info_text')
 
 /*------------------------------------------------
  [ Orbitcontrol Static]*/
@@ -466,7 +468,6 @@ UI.Earth_Onclick = () => {
 /*------------------------------------------------
  [ Language and Menu Event]*/
 UI.Language_Onclick = (language) => {
-    console.log('click')
     //change css 
     UI.language = language
     const languageHtml = $(language)
@@ -476,6 +477,7 @@ UI.Language_Onclick = (language) => {
     }
     languageHtml.addClass('selected')
     UI.Menu_Text_Change_By_Language(language)
+    UI.Web_info_change_by_language(language)
     if (window.innerWidth <= 425) UI.Earth_Onclick()
 }
 UI.Menu_Text_Change_By_Language = (language) => {
@@ -514,6 +516,20 @@ UI.Menu_Text_Change_By_Language = (language) => {
     for (let i = 1; i < 7; i++) {
         const getMenuText = $(`.menu_text_${i}`)
         getMenuText.text(textArr[i - 1])
+    }
+}
+UI.Web_info_change_by_language = (language) => {
+    const web_info_text = [
+            '建議使用最新版本 Chrome 或 Firefox 瀏覽器，手機瀏覽時，請使用 iOS 14 或 Android 12 以上手機系統，以獲得最佳瀏覽體驗。',
+            'For best performance, it is recommended to use the up-to-date version of Chrome or FireFox browser. During using a mobile phone browsing, please run on iOS 14 or Android 12 or above.',
+            '当ウェブサイトをより快適にご利用いただくため、 Chrome や Firefoxのブラウザで。スマホの方は、お使いのブラウザはiOS 14やAndroid 12以上のバージョンをご利用お願いします。'
+    ]
+    if (language === '.chinese') {
+        UI.Web_info_text.text(web_info_text[0])
+    } else if (language === '.english') {
+        UI.Web_info_text.text(web_info_text[1])
+    } else if (language === '.japanese') {
+        UI.Web_info_text.text(web_info_text[2])
     }
 }
 
@@ -561,18 +577,17 @@ UI.VideoStart = () => {
     UI.Webgl.css('display', 'none')
     cancelAnimationFrame(Threejs.myreq)
 
-    //const video = document.querySelector('.video')
-    //video.addEventListener('loadeddata', () => video.play())
 
     UI.Skip.on('click', () => {
         UI.Video.prop('muted', true)
         UI.Video.trigger('pause')
         UI.Video.removeAttr('src')
-        //UI.Video.css('display', 'none')
         UI.ModelBackground.css('display', 'block')
         UI.VideoMain.css('display', 'none')
         UI.Webgl.css('display', 'block')
-        animate()
+        setTimeout(() => Threejs.gltfLoader(Threejs.objectUrl),1)
+        
+        //gltfLoadingMain();
         //document.location.assign(document.location.origin + "/home/matterport")
     })
 
@@ -583,28 +598,30 @@ UI.VideoStart = () => {
         UI.ModelBackground.css('display', 'block')
         UI.VideoMain.css('display', 'none')
         UI.Webgl.css('display', 'block')
-        animate()
+        //animate()
+        setTimeout(() => Threejs.gltfLoader(Threejs.objectUrl), 1)
+        //gltfLoadingMain();
     })
 }
 
-UI.Web_info_change_by_phone = () => {
-    window.addEventListener('resize', () => {
-        if (window.innerWidth <= 425) {
-            UI.Web_info.text('請使用 iOS 14 或 Android 12 以上手機系統，以獲得最佳瀏覽體驗。')
-        } else {
-            UI.Web_info.text('建議使用最新版本 Chrome 或 Firefox 瀏覽器，並設定 1024ｘ768 以上 顯示器 解析度，以獲得最佳瀏覽體驗。')
-        }
-    })
-    if (window.innerWidth <= 425) {
-        UI.Web_info.text('請使用 iOS 14 或 Android 12 以上手機系統，以獲得最佳瀏覽體驗。')
-    }
-}
+//UI.Web_info_change_by_phone = () => {
+//    window.addEventListener('resize', () => {
+//        if (window.innerWidth <= 425) {
+//            UI.Web_info.text('請使用 iOS 14 或 Android 12 以上手機系統，以獲得最佳瀏覽體驗。')
+//        } else {
+//            UI.Web_info.text('建議使用最新版本 Chrome 或 Firefox 瀏覽器，並設定 1024ｘ768 以上 顯示器 解析度，以獲得最佳瀏覽體驗。')
+//        }
+//    })
+//    if (window.innerWidth <= 425) {
+//        UI.Web_info.text('請使用 iOS 14 或 Android 12 以上手機系統，以獲得最佳瀏覽體驗。')
+//    }
+//}
 /*--------------------------------------------------------
   [UI Init]*/
 UI.ModelPage = () => {
     UI.LoadingBar.css('display', 'block')
     UI.VideoStart()
-    UI.Web_info_change_by_phone()
+    /*UI.Web_info_change_by_phone()*/
 }
 
 
