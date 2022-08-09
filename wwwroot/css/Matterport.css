@@ -305,6 +305,12 @@
     transition: height 0.4s ease;
     padding-right: 40px;
     touch-action: none;
+    /**add */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    /*background: linear-gradient(to right,rgba(147,156,167,0.5),transparent);*/
+    background: rgba(147,156,167,0.3);
 }
 
 .ipad_menu_1 {
@@ -667,6 +673,10 @@
         transform: translateY(0);
         overflow: hidden;
         -webkit-overflow-scrolling: touch;
+        /**add */
+        padding-bottom: 0;
+        padding-left: 0;
+        background: none;
     }
 
     .menu_rwd_container {
